@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">掌上吉大</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_oa">校内通知</string>
+    <string name="title_activity_oa_detail">校内通知-详情</string>
+</resources>
