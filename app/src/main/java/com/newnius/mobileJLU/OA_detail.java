@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
@@ -55,8 +57,9 @@ public class OA_detail extends AppCompatActivity {
                     OATitle.setText(title);
                     OAPublisher.setText(publisher);
                     OATime.setText(time);
-                    OAContent.setText(content);
-
+                    OAContent.setText(Html.fromHtml(content));
+                    OAContent.setMovementMethod(LinkMovementMethod.getInstance());
+                    Log.i("oa", content);
                 }
                 super.handleMessage(msg);
             }
@@ -149,18 +152,13 @@ public class OA_detail extends AppCompatActivity {
         String downStr = "";
         String name = "";
         while (m4.find()) {
-            downStr = "http://oa.jlu.edu.cn/"+m4.group(1);
+            downStr = "http://oa.jlu.edu.cn/" + m4.group(1);
             name = m4.group(2);
             downloadable.add(downStr);
-            Log.i("oa", downStr + "=>" + name);
+            Log.i("oa", downStr + " => " + name);
             downloadableNames.add(name);
+            content += "<br/>附件 " + "<a href='" + downStr + "'>" + name + "</a><br/>";
         }
-
-
-/*
-* attach
-* <table id="attach" width="100%" border="0" align="center"><tr><td><hr size="1" width="300" align="left" />&nbsp;&nbsp;&nbsp;&nbsp;<img align="absmiddle" src="../../image/attach.gif" /> 附件</td></tr><tr><td><ol>(.*)</ol></td></tr></table>
-* */
 
     }
 
