@@ -62,7 +62,7 @@ public class oa extends AppCompatActivity {
                         data.add(item);
                     }
                     //创建SimpleAdapter适配器将数据绑定到item显示控件上
-                    SimpleAdapter adapter = new SimpleAdapter(oa.this, data, R.layout.item,
+                    SimpleAdapter adapter = new SimpleAdapter(oa.this, data, R.layout.item_oa,
                             new String[]{"title", "time"}, new int[]{R.id.oaTitle, R.id.oaTime});
                     //实现列表的显示
                     listView.setAdapter(adapter);
@@ -114,7 +114,7 @@ public class oa extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar item_oa clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();

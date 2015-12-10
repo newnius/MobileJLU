@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar item_oa clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         int[] moduleIcons = {R.drawable.icon_oa, R.drawable.icon_oa,R.drawable.icon_oa,
                 R.drawable.icon_oa,R.drawable.icon_oa,R.drawable.icon_oa,
                 R.drawable.icon_oa,R.drawable.icon_oa,R.drawable.icon_oa};
-        String[] moduleIds = {"oa", "jwc", "book", "card", "job", "mark", "curriculumSchedule", "tel", "lost", "map"};
+        String[] moduleIds = {"oa", "jwc", "book", "card", "job", "uims", "curriculumSchedule", "tel", "lost", "map"};
         String[] moduleNames = {"校内通知", "教务通知", "图书服务", "校园卡", "就业信息", "成绩查询", "课程表", "吉大黄页", "失物招领", "校园地图"};
         GridView gridView = (GridView)findViewById(R.id.gridView);
         List<HashMap<String, Object>> modules = new ArrayList<>();
@@ -83,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
                                 case "oa":
                                     Intent intentOa = new Intent(MainActivity.this, oa.class);
                                     startActivity(intentOa);
+                                    break;
+                                case "uims":
+                                    Intent intentUIms = new Intent(MainActivity.this, UIMS.class);
+                                    startActivity(intentUIms);
                                     break;
                                 default:
                                     Toast.makeText(MainActivity.this,"in dev",Toast.LENGTH_SHORT).show();

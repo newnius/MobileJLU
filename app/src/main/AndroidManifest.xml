@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.newnius.mobileJLU.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,12 +19,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.newnius.mobileJLU.oa"
+            android:name=".oa"
             android:label="@string/title_activity_oa" >
         </activity>
         <activity
-            android:name="com.newnius.mobileJLU.OA_detail"
+            android:name=".OA_detail"
             android:label="@string/title_activity_oa_detail" >
+        </activity>
+        <activity android:name=".UIMS" >
         </activity>
     </application>
 
