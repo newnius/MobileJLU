@@ -29,8 +29,8 @@ public class UIMS extends AppCompatActivity {
     Handler handler;
     private ListView listView;
     List<UimsCourse> uimsCourses;
-    String username = "";
-    String password = "";
+    String username = "54130507";
+    String password = "a810286392";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +103,6 @@ public class UIMS extends AppCompatActivity {
                     while((str = br.readLine()) != null){
                         sourceCode += str;
                     }
-                    sourceCode = null;
                     Log.i("res", sourceCode);
                     conn.disconnect();
 

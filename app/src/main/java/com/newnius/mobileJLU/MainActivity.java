@@ -23,6 +23,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         loadModules();
 
+        findViewById(R.id.me).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentLogin = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intentLogin);
+            }
+        });
+
     }
 
     @Override
