@@ -1,5 +1,6 @@
 package com.newnius.mobileJLU;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -29,13 +31,22 @@ public class UIMS extends AppCompatActivity {
     Handler handler;
     private ListView listView;
     List<UimsCourse> uimsCourses;
-    String username = "54130507";
-    String password = "a810286392";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uims);
 
+        if(AccountManager.getUimsCookie()==null) {
+            Toast.makeText(this,"尚未登录",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+
+/*        if(AccountManager.getUimsCookie()==null) {
+            Intent intentLogin = new Intent(UIMS.this, LoginActivity.class);
+            startActivity(intentLogin);
+        }*/
+
+        //tobe fix: can not get new cookie
 
         listView = (ListView)findViewById(R.id.listView);
         handler = new Handler() {
@@ -73,8 +84,7 @@ public class UIMS extends AppCompatActivity {
                 super.handleMessage(msg);
             }
         };
-
-        login(username, password);
+        getLatestScore(AccountManager.getUimsCookie());}
     }
 
     public void get(final String location,final String cookie){
@@ -87,7 +97,7 @@ public class UIMS extends AppCompatActivity {
                     URL url = new URL(location);
                     HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                     conn.setConnectTimeout(3 * 1000);
-                    conn.setRequestProperty("Cookie",cookie);
+                    conn.setRequestProperty("Cookie", cookie);
 
                     Log.i("uims", conn.getHeaderField("set-cookie"));
                     Map map = conn.getHeaderFields();
@@ -112,48 +122,6 @@ public class UIMS extends AppCompatActivity {
                 }
             }
         }).start();
-    }
-
-    public boolean login(String username, String password){
-        password = md5("UIMS" + username + password);
-        final String data = "j_username="+username+"&j_password="+password;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://uims.jlu.edu.cn/ntms/j_spring_security_check");
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-                    conn.setDoInput(true);
-                    conn.setDoOutput(true);
-                    conn.setRequestMethod("POST");
-                    conn.setUseCaches(false);
-                    conn.setInstanceFollowRedirects(false);
-                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                    conn.connect();
-
-                    DataOutputStream out = new DataOutputStream(conn.getOutputStream());
-                    out.writeBytes(data);
-                    out.flush();
-                    out.close();
-
-                    InputStream is = conn.getInputStream();
-
-                    Log.i("jj", conn.getHeaderField("Set-Cookie"));
-                    if(conn.getHeaderField("Location").contains("index.do")){
-                        getLatestScore(conn.getHeaderField("Set-Cookie"));
-                    }
-                    is.close();
-                    conn.disconnect();
-                    return ;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
-            }
-        }).start();
-
-
-        return true;
     }
 
     public void post(final String location, final String data){
@@ -211,6 +179,7 @@ public class UIMS extends AppCompatActivity {
     }
 
     public void getLatestScore(final String cookie){
+        Log.i("uims", "getlateltscore");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -242,6 +211,7 @@ public class UIMS extends AppCompatActivity {
                     is.close();
                     br.close();
                     conn.disconnect();
+                    Log.i("uims",response+"jhgjhgjhgjgjgjgghj");
 
                     UimsMsg uimsMsg = new Gson().fromJson(response, UimsMsg.class);
 
@@ -261,25 +231,4 @@ public class UIMS extends AppCompatActivity {
         }).start();
     }
 
-
-    private String md5(String str) {
-        MessageDigest messageDigest = null;
-        try {
-            messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.reset();
-            messageDigest.update(str.getBytes("UTF-8"));
-        } catch (Exception e) {
-
-        }
-        byte[] byteArray = messageDigest.digest();
-        StringBuffer md5StrBuff = new StringBuffer();
-        for (int i = 0; i < byteArray.length; i++) {
-            if (Integer.toHexString(0xFF & byteArray[i]).length() == 1)
-                md5StrBuff.append("0").append(Integer.toHexString(0xFF & byteArray[i]));
-            else
-                md5StrBuff.append(Integer.toHexString(0xFF & byteArray[i]));
-        }
-        ////16位加密，从第9位到25位
-        return md5StrBuff.toString().toLowerCase();
-    }
 }

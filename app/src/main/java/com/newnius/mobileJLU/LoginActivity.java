@@ -56,8 +56,8 @@ public class LoginActivity extends AppCompatActivity{
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
+    private EditText classNoView;
+    private EditText passwordView;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -66,13 +66,13 @@ public class LoginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        classNoView = (EditText) findViewById(R.id.classNo);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        passwordView = (EditText) findViewById(R.id.password);
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button signInButton = (Button) findViewById(R.id.uims_sign_in_button);
+        signInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity{
         mProgressView = findViewById(R.id.login_progress);
     }
 
+    //remember classNo and password and fill it
     private void populateAutoComplete() {
         return ;
     }
@@ -99,31 +100,31 @@ public class LoginActivity extends AppCompatActivity{
         }
 
         // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
+        classNoView.setError(null);
+        passwordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String classNo = classNoView.getText().toString();
+        String password = passwordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+            passwordView.setError(getString(R.string.error_invalid_password));
+            focusView = passwordView;
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+        // Check for a valid classNo.
+        if (TextUtils.isEmpty(classNo)) {
+            classNoView.setError(getString(R.string.error_field_required));
+            focusView = classNoView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        } else if (!isClassNoValid(classNo)) {
+            classNoView.setError(getString(R.string.error_invalid_classno));
+            focusView = classNoView;
             cancel = true;
         }
 
@@ -135,14 +136,13 @@ public class LoginActivity extends AppCompatActivity{
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(classNo, password);
             mAuthTask.execute((Void) null);
         }
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return true;
+    private boolean isClassNoValid(String classNo) {
+        return classNo.length()==8;
     }
 
     private boolean isPasswordValid(String password) {
@@ -193,20 +193,18 @@ public class LoginActivity extends AppCompatActivity{
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
+        private final String classNo;
+        private final String password;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
+        UserLoginTask(String classNo, String password) {
+            this.classNo = classNo;
+            this.password = GeneralMethods.md5("UIMS" + classNo + password, false, false);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                //mPassword = md5("UIMS" + username + mPassword);
-                //final String data = "j_username=" + username + "&j_password=" + password;
-                final String data = "j_username="  + "&j_password=" + mPassword;
+                final String data = "j_username=" + classNo + "&j_password=" + password;
                 URL url = new URL("http://uims.jlu.edu.cn/ntms/j_spring_security_check");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setDoInput(true);
@@ -224,6 +222,9 @@ public class LoginActivity extends AppCompatActivity{
 
                 InputStream is = conn.getInputStream();
                 if (conn.getHeaderField("Location").contains("index.do")) {
+                    AccountManager.setClassNo(classNo);
+                    AccountManager.setUImsPassword(password);
+                    AccountManager.setUimsCookie(conn.getHeaderField("Set-Cookie"));
                     return true;
                 }
                 is.close();
@@ -244,8 +245,8 @@ public class LoginActivity extends AppCompatActivity{
             if (success) {
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                passwordView.setError(getString(R.string.error_incorrect_password));
+                passwordView.requestFocus();
             }
         }
 

@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(intentUIms);
                                     break;
                                 default:
-                                    Toast.makeText(MainActivity.this,"in dev",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this,"开发中",Toast.LENGTH_SHORT).show();
 
                                     break;
 
