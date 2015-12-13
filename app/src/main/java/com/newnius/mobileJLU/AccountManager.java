@@ -11,6 +11,9 @@ public class AccountManager {
     private static String UImsPassword;
     private static String UimsCookie;
 
+    private static String name;
+
+
     public static String getUimsCookie() {
         return UimsCookie;
     }
@@ -57,5 +60,13 @@ public class AccountManager {
 
     public static void setCardNo(String cardNo) {
         AccountManager.cardNo = cardNo;
+    }
+
+    public static String getName() {
+        return name;
+    }
+
+    public static void setName(String name) {
+        AccountManager.name = name;
     }
 }

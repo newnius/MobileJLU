@@ -5,14 +5,18 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -29,8 +33,11 @@ import java.util.Map;
 
 public class UIMS extends AppCompatActivity {
     Handler handler;
+    Handler termHandler;
     private ListView listView;
     List<UimsCourse> uimsCourses;
+    List<UimsTerm> uimsTerms;
+    private int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +56,8 @@ public class UIMS extends AppCompatActivity {
         //tobe fix: can not get new cookie
 
         listView = (ListView)findViewById(R.id.listView);
-        handler = new Handler() {
+            try {
+                handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 List<HashMap<String, String>> data = new ArrayList<>();
@@ -84,7 +92,58 @@ public class UIMS extends AppCompatActivity {
                 super.handleMessage(msg);
             }
         };
-        getLatestScore(AccountManager.getUimsCookie());}
+
+    termHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            try {
+                Spinner spinner = (Spinner) findViewById(R.id.c);
+                Log.i("terms",uimsTerms.size()+"");
+
+                List<HashMap<String, Object>> data = new ArrayList<>();
+                for (final UimsTerm uimsTerm: uimsTerms) {
+                    HashMap<String, Object> item= new HashMap<>();
+                    item.put("termId", uimsTerm.getTermId());
+                    item.put("termName", uimsTerm.getTermName());
+                    data.add(item);
+                }
+
+                SimpleAdapter adapter = new SimpleAdapter(UIMS.this, data, R.layout.my_simple_spinner_item, new String[]{"termName"}, new int[]{R.id.title});
+
+                adapter.setDropDownViewResource(R.layout.my_simple_spinner_item);
+                spinner.setAdapter(adapter);
+                spinner.setSelection(1,true);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        HashMap<String, Object> data = (HashMap<String, Object>)parent.getItemAtPosition(position);
+                        Log.i("spinner", data.get("termId").toString());
+                        getScoreByTerm(AccountManager.getUimsCookie(), Integer.parseInt(data.get("termId").toString()));
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                super.handleMessage(msg);
+            }catch(Exception e){e.printStackTrace();}
+        }
+    };
+
+            getTerms(AccountManager.getUimsCookie());
+                getUserInfo(AccountManager.getUimsCookie());
+        getLatestScore(AccountManager.getUimsCookie());
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+
+        }
+
+
+
     }
 
     public void get(final String location,final String cookie){
@@ -192,7 +251,7 @@ public class UIMS extends AppCompatActivity {
                     conn.setUseCaches(false);
                     conn.setInstanceFollowRedirects(false);
                     conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("Cookie",cookie);
+                    conn.setRequestProperty("Cookie", cookie);
                     conn.connect();
 
                     DataOutputStream out = new DataOutputStream(conn.getOutputStream());
@@ -211,15 +270,15 @@ public class UIMS extends AppCompatActivity {
                     is.close();
                     br.close();
                     conn.disconnect();
-                    Log.i("uims",response+"jhgjhgjhgjgjgjgghj");
+                    Log.i("getLatestScore", response);
 
-                    UimsMsg uimsMsg = new Gson().fromJson(response, UimsMsg.class);
+                    UimsMsgCourse uimsMsgCourses = new Gson().fromJson(response, UimsMsgCourse.class);
+
 
 /*                    List<UimsCourse> list = new Gson().fromJson(new Gson().toJson(uimsMsg.getValue()), new TypeToken<List<UimsCourse>>() {}.getType());
                     uimsMsg.setValue(list);
                     uimsCourses = list;*/
-                    uimsCourses = uimsMsg.getValue();
-
+                    uimsCourses = uimsMsgCourses.getValue();
                     Message msg = handler.obtainMessage();
                     handler.sendMessage(msg);
                     return ;
@@ -231,4 +290,147 @@ public class UIMS extends AppCompatActivity {
         }).start();
     }
 
+    public void getScoreByTerm(final String cookie, final int termId){
+        Log.i("uims", "getScoreByTerm");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://uims.jlu.edu.cn/ntms/service/res.do");
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+                    conn.setRequestMethod("POST");
+                    conn.setUseCaches(false);
+                    conn.setInstanceFollowRedirects(false);
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setRequestProperty("Cookie", cookie);
+                    conn.connect();
+
+                    DataOutputStream out = new DataOutputStream(conn.getOutputStream());
+                    out.writeBytes("{\"tag\":\"archiveScore@queryCourseScore\",\"branch\":\"byTerm\",\"params\":{\"studId\":" + userId + ",\"termId\":"+termId+"},\"orderBy\":\"teachingTerm.termId, course.courName\"}");
+                    out.flush();
+                    out.close();
+
+                    InputStream is = conn.getInputStream();
+
+                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                    String response = "";
+                    String readLine = null;
+                    while((readLine =br.readLine()) != null){
+                        response = response + readLine;
+                    }
+                    is.close();
+                    br.close();
+                    conn.disconnect();
+                    Log.i("getScoreByTerm", response);
+
+                    UimsMsgCourse uimsMsgCourses = new Gson().fromJson(response, UimsMsgCourse.class);
+
+
+                    uimsCourses = uimsMsgCourses.getValue();
+                    Message msg = handler.obtainMessage();
+                    handler.sendMessage(msg);
+                    return ;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+        }).start();
+    }
+
+    public void getTerms(final String cookie) {
+
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Log.i("aa", "sssssssssssss");
+
+                        URL url = new URL("http://uims.jlu.edu.cn/ntms/service/res.do");
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setDoInput(true);
+                        conn.setDoOutput(true);
+                        conn.setRequestMethod("POST");
+                        conn.setUseCaches(false);
+                        conn.setInstanceFollowRedirects(false);
+                        conn.setRequestProperty("Content-Type", "application/json");
+                        conn.setRequestProperty("Cookie", cookie);
+                        conn.connect();
+
+
+                        DataOutputStream out = new DataOutputStream(conn.getOutputStream());
+                        out.writeBytes("{\"type\":\"search\",\"res\":\"teachingTerm\",\"orderBy\":\"termName desc\",\"tag\":\"teachingTerm\",\"branch\":\"default\",\"params\":{}}");
+                        out.flush();
+                        out.close();
+
+                        InputStream is = conn.getInputStream();
+
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                        String response = "";
+                        String readLine = null;
+                        while ((readLine = br.readLine()) != null) {
+                            response = response + readLine;
+                        }
+                        is.close();
+                        br.close();
+                        conn.disconnect();
+                        UimsMsgTerm uimsMsgTerm = new Gson().fromJson(response, UimsMsgTerm.class);
+                        uimsTerms = uimsMsgTerm.getValue();
+                        Message msg = termHandler.obtainMessage();
+                        termHandler.sendMessage(msg);
+                        return;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                }
+            }).start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getUserInfo(final String cookie){
+        Log.i("uims", "getUserInfo");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do");
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    //conn.setDoInput(true);
+                    //conn.setDoOutput(true);
+                    //conn.setRequestMethod("GET");
+                    //conn.setUseCaches(false);
+                    //conn.setInstanceFollowRedirects(false);
+                    //conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setRequestProperty("Cookie", cookie);
+                    conn.connect();
+
+                    InputStream is = conn.getInputStream();
+
+                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                    String response = "";
+                    String readLine = null;
+                    while((readLine =br.readLine()) != null){
+                        response = response + readLine;
+                    }
+                    is.close();
+                    br.close();
+                    conn.disconnect();
+                    Log.i("userinfo", response);
+                    UimsStuInfo uimsStuInfo = new Gson().fromJson(response, UimsStuInfo.class);
+                    userId = uimsStuInfo.getUserId();
+                    return ;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return;
+                }
+            }
+        }).start();
+    }
 }

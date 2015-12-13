@@ -9,20 +9,12 @@ public class UimsMsg {
     String id;
     String msg;
     String resName;
-    List<UimsCourse> value;
+    int status;
 
-    public UimsMsg(String id, List<UimsCourse> value, String resName, String msg) {
+    public UimsMsg(String id, String resName, String msg, int status) {
         this.id = id;
-        this.value = value;
         this.resName = resName;
         this.msg = msg;
-    }
-
-    public List<UimsCourse> getValue() {
-        return value;
-    }
-
-    public void setValue(List<UimsCourse> value) {
-        this.value = value;
+        this.status = status;
     }
 }

@@ -7,11 +7,20 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent" >
 
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"
             >
+
+            <Spinner
+                android:id="@+id/c"
+                android:prompt="@string/action_sign_in_short"
+                android:scrollbarSize="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Spinner>>
 
             <com.newnius.mobileJLU.ListViewInScrollView
                 android:layout_width="fill_parent"
