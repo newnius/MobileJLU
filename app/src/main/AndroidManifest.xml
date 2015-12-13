@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".oa"
+            android:name=".OaActivity"
             android:label="@string/title_activity_oa" >
         </activity>
         <activity
-            android:name=".OA_detail"
+            android:name=".OaDetailActivity"
             android:label="@string/title_activity_oa_detail" >
         </activity>
         <activity android:name=".UIMS" >
@@ -31,6 +31,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_uims_login" >
+        </activity>
+        <activity android:name=".CurriculumActivity" >
         </activity>
     </application>
 

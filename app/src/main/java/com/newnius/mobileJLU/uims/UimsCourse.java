@@ -1,6 +1,4 @@
-package com.newnius.mobileJLU;
-
-import android.util.Log;
+package com.newnius.mobileJLU.uims;
 
 /**
  * Created by newnius on 15-12-10.

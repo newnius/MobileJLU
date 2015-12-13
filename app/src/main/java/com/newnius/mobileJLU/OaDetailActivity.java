@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class OA_detail extends AppCompatActivity {
+public class OaDetailActivity extends AppCompatActivity {
     private int id;
     private Handler handler;
     private String title;
@@ -59,7 +59,7 @@ public class OA_detail extends AppCompatActivity {
                     OATime.setText(time);
                     OAContent.setText(Html.fromHtml(content));
                     OAContent.setMovementMethod(LinkMovementMethod.getInstance());
-                    Log.i("oa", content);
+                    Log.i("OaActivity", content);
                 }
                 super.handleMessage(msg);
             }
@@ -72,7 +72,7 @@ public class OA_detail extends AppCompatActivity {
                     public void run() {
                         Intent intent = getIntent();
                         Bundle bundle = intent.getExtras();
-                        downloadContent("http://oa.jlu.edu.cn/" + bundle.getString("url"));
+                        downloadContent("http://OaActivity.jlu.edu.cn/" + bundle.getString("url"));
                         Message msg = handler.obtainMessage();
                         handler.sendMessage(msg);
                     }
@@ -152,10 +152,10 @@ public class OA_detail extends AppCompatActivity {
         String downStr = "";
         String name = "";
         while (m4.find()) {
-            downStr = "http://oa.jlu.edu.cn/" + m4.group(1);
+            downStr = "http://OaActivity.jlu.edu.cn/" + m4.group(1);
             name = m4.group(2);
             downloadable.add(downStr);
-            Log.i("oa", downStr + " => " + name);
+            Log.i("OaActivity", downStr + " => " + name);
             downloadableNames.add(name);
             content += "<br/>附件 " + "<a href='" + downStr + "'>" + name + "</a><br/>";
         }

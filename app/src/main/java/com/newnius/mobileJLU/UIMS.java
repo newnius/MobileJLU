@@ -1,22 +1,23 @@
 package com.newnius.mobileJLU;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.newnius.mobileJLU.uims.UimsCourse;
+import com.newnius.mobileJLU.uims.UimsMsgCourse;
+import com.newnius.mobileJLU.uims.UimsMsgTerm;
+import com.newnius.mobileJLU.uims.UimsStuInfo;
+import com.newnius.mobileJLU.uims.UimsTerm;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -24,7 +25,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -82,7 +82,7 @@ public class UIMS extends AppCompatActivity {
                                     HashMap<String, Object> data = (HashMap<String, Object>) listView.getItemAtPosition(position);
                                     String url = data.get("url").toString();
 
-                                    Intent intent = new Intent(UIMS.this, OA_detail.class);
+                                    Intent intent = new Intent(UIMS.this, OaDetailActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putCharSequence("url", url);
                                     intent.putExtras(bundle);

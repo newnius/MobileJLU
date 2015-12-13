@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class oa extends AppCompatActivity {
+public class OaActivity extends AppCompatActivity {
 
 
     private Handler handler;
@@ -51,10 +51,10 @@ public class oa extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 if (result != null) {
-                    List<OA_Announcement> res = getAnnouncement(result);
-                    Toast.makeText(oa.this, res.size() + "", Toast.LENGTH_LONG).show();
+                    List<OaAnnouncement> res = getAnnouncement(result);
+                    Toast.makeText(OaActivity.this, res.size() + "", Toast.LENGTH_LONG).show();
 
-                    for (final OA_Announcement an : res) {
+                    for (final OaAnnouncement an : res) {
                         HashMap<String, Object> item= new HashMap<>();
                         item.put("url", an.getUrl());
                         item.put("title", an.getTitle());
@@ -62,7 +62,7 @@ public class oa extends AppCompatActivity {
                         data.add(item);
                     }
                     //创建SimpleAdapter适配器将数据绑定到item显示控件上
-                    SimpleAdapter adapter = new SimpleAdapter(oa.this, data, R.layout.item_oa,
+                    SimpleAdapter adapter = new SimpleAdapter(OaActivity.this, data, R.layout.item_oa,
                             new String[]{"title", "time"}, new int[]{R.id.oaTitle, R.id.oaTime});
                     //实现列表的显示
                     listView.setAdapter(adapter);
@@ -75,7 +75,7 @@ public class oa extends AppCompatActivity {
                                     HashMap<String, Object> data = (HashMap<String, Object>) listView.getItemAtPosition(position);
                                     String url = data.get("url").toString();
 
-                                    Intent intent = new Intent(oa.this, OA_detail.class);
+                                    Intent intent = new Intent(OaActivity.this, OaDetailActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putCharSequence("url", url);
                                     intent.putExtras(bundle);
@@ -132,7 +132,7 @@ public class oa extends AppCompatActivity {
                 new Runnable() {
                     @Override
                     public void run() {
-                        downloadHttp("http://oa.jlu.edu.cn/list.asp?s=1&page="+currentPage);
+                        downloadHttp("http://OaActivity.jlu.edu.cn/list.asp?s=1&page="+currentPage);
                         currentPage++;
                         Message msg = handler.obtainMessage();
                         handler.sendMessage(msg);
@@ -189,8 +189,8 @@ public class oa extends AppCompatActivity {
 
     }
 
-    public List<OA_Announcement> getAnnouncement(String resource){
-        List<OA_Announcement> list = new ArrayList<OA_Announcement>();
+    public List<OaAnnouncement> getAnnouncement(String resource){
+        List<OaAnnouncement> list = new ArrayList<OaAnnouncement>();
         // 生成一个Pattern,同时编译一个正则表达式
         Pattern p = Pattern.compile("<a href=\"([^\"]+)\" title=\"([^\"]+)\">([^<]*)</a></td><td align=\"right\" class=\"listTD2\"><a href=\"([^\"]+)\">([^<]+)</a></td><td class=\"listTD[34]\">([^<]+)</td></tr>");
         //用Pattern的split()方法把字符串按"/"分割
@@ -202,7 +202,7 @@ public class oa extends AppCompatActivity {
             String publisherUrl = m.group(4);
             String publisher = m.group(5);
             String time = m.group(6);
-            list.add(new OA_Announcement(url, fullTitle, publisherUrl, publisher, time));
+            list.add(new OaAnnouncement(url, fullTitle, publisherUrl, publisher, time));
         }
 
 

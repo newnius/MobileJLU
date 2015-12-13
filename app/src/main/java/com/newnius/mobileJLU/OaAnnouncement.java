@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by newnius on 15-9-12.
  */
-public class OA_Announcement {
+public class OaAnnouncement {
     private int id;
     private boolean isSticked = false;
     private String url;
@@ -16,7 +16,7 @@ public class OA_Announcement {
     private String time;
     private List<String> downloadable;
 
-    public OA_Announcement(String url, String title, String publisherUrl, String publisher, String time) {
+    public OaAnnouncement(String url, String title, String publisherUrl, String publisher, String time) {
 
 
         this.title = title;

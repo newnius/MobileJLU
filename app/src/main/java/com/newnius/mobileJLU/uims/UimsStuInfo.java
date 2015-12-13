@@ -1,4 +1,4 @@
-package com.newnius.mobileJLU;
+package com.newnius.mobileJLU.uims;
 
 /**
  * Created by newnius on 15-12-12.
