@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.newnius.mobileJLU.curriculum.CurriculumGetTask;
+
 public class CurriculumActivity extends AppCompatActivity {
 
     @Override

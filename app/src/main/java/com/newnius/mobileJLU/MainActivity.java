@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                     break;
 
                                 case "uims":
-                                    Intent intentUIms = new Intent(MainActivity.this, UIMS.class);
+                                    Intent intentUIms = new Intent(MainActivity.this, UimsActivity.class);
                                     startActivity(intentUIms);
                                     break;
                                 default:

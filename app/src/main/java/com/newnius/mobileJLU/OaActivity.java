@@ -132,7 +132,7 @@ public class OaActivity extends AppCompatActivity {
                 new Runnable() {
                     @Override
                     public void run() {
-                        downloadHttp("http://OaActivity.jlu.edu.cn/list.asp?s=1&page="+currentPage);
+                        downloadHttp("http://oa.jlu.edu.cn/list.asp?s=1&page="+currentPage);
                         currentPage++;
                         Message msg = handler.obtainMessage();
                         handler.sendMessage(msg);

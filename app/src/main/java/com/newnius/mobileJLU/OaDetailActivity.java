@@ -72,7 +72,7 @@ public class OaDetailActivity extends AppCompatActivity {
                     public void run() {
                         Intent intent = getIntent();
                         Bundle bundle = intent.getExtras();
-                        downloadContent("http://OaActivity.jlu.edu.cn/" + bundle.getString("url"));
+                        downloadContent("http://oa.jlu.edu.cn/" + bundle.getString("url"));
                         Message msg = handler.obtainMessage();
                         handler.sendMessage(msg);
                     }
@@ -152,7 +152,7 @@ public class OaDetailActivity extends AppCompatActivity {
         String downStr = "";
         String name = "";
         while (m4.find()) {
-            downStr = "http://OaActivity.jlu.edu.cn/" + m4.group(1);
+            downStr = "http://oa.jlu.edu.cn/" + m4.group(1);
             name = m4.group(2);
             downloadable.add(downStr);
             Log.i("OaActivity", downStr + " => " + name);

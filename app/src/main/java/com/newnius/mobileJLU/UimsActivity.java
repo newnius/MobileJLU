@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class UIMS extends AppCompatActivity {
+public class UimsActivity extends AppCompatActivity {
     Handler handler;
     Handler termHandler;
     private ListView listView;
@@ -49,7 +49,7 @@ public class UIMS extends AppCompatActivity {
         }else{
 
 /*        if(AccountManager.getUimsCookie()==null) {
-            Intent intentLogin = new Intent(UIMS.this, LoginActivity.class);
+            Intent intentLogin = new Intent(UimsActivity.this, LoginActivity.class);
             startActivity(intentLogin);
         }*/
 
@@ -69,7 +69,7 @@ public class UIMS extends AppCompatActivity {
                         data.add(item);
                     }
                     //创建SimpleAdapter适配器将数据绑定到item显示控件上
-                    SimpleAdapter adapter = new SimpleAdapter(UIMS.this, data, R.layout.item_course,
+                    SimpleAdapter adapter = new SimpleAdapter(UimsActivity.this, data, R.layout.item_course,
                             new String[]{"courseName","score"}, new int[]{R.id.courName,R.id.courseScore});
                     //实现列表的显示
                     listView.setAdapter(adapter);
@@ -82,7 +82,7 @@ public class UIMS extends AppCompatActivity {
                                     HashMap<String, Object> data = (HashMap<String, Object>) listView.getItemAtPosition(position);
                                     String url = data.get("url").toString();
 
-                                    Intent intent = new Intent(UIMS.this, OaDetailActivity.class);
+                                    Intent intent = new Intent(UimsActivity.this, OaDetailActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putCharSequence("url", url);
                                     intent.putExtras(bundle);
@@ -108,7 +108,7 @@ public class UIMS extends AppCompatActivity {
                     data.add(item);
                 }
 
-                SimpleAdapter adapter = new SimpleAdapter(UIMS.this, data, R.layout.my_simple_spinner_item, new String[]{"termName"}, new int[]{R.id.title});
+                SimpleAdapter adapter = new SimpleAdapter(UimsActivity.this, data, R.layout.my_simple_spinner_item, new String[]{"termName"}, new int[]{R.id.title});
 
                 adapter.setDropDownViewResource(R.layout.my_simple_spinner_item);
                 spinner.setAdapter(adapter);
