@@ -1,4 +1,4 @@
-package com.newnius.mobileJLU;
+package com.newnius.mobileJLU.util;
 
 import java.security.MessageDigest;
 

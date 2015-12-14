@@ -9,13 +9,25 @@ public class CurriCulumnLesson {
     private int endWeek;
     private int beginWeek;
     private int dayOfWeek;
+    private int start = 0;
+    private int length = 0;
+    private String weekOddEven;//E & O
 
-    public CurriCulumnLesson(String classroomName, int classSet, int endWeek, int beginWeek, int dayOfWeek) {
+    public CurriCulumnLesson(String classroomName, int classSet, int endWeek, int beginWeek, int dayOfWeek, String weekOddEven) {
         this.classroomName = classroomName;
         this.classSet = classSet;
         this.endWeek = endWeek;
         this.beginWeek = beginWeek;
         this.dayOfWeek = dayOfWeek;
+        this.weekOddEven = weekOddEven;
+        while(classSet>0){
+            start++;
+            if((classSet&1) == 1){
+                length++;
+            }
+            classSet = classSet>>1;
+        }
+        start-=length;
     }
 
     public String getClassroomName() {
@@ -24,10 +36,6 @@ public class CurriCulumnLesson {
 
     public void setClassroomName(String classroomName) {
         this.classroomName = classroomName;
-    }
-
-    public int getClassSet() {
-        return classSet;
     }
 
     public void setClassSet(int classSet) {
@@ -56,5 +64,21 @@ public class CurriCulumnLesson {
 
     public void setDayOfWeek(int dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+    }
+
+    public String getWeekOddEven() {
+        return weekOddEven;
+    }
+
+    public void setWeekOddEven(String weekOddEven) {
+        this.weekOddEven = weekOddEven;
+    }
+
+    public int getStart(){
+        return start;
+    }
+
+    public int getLength(){
+        return length;
     }
 }

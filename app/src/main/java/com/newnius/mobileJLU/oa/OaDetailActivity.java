@@ -1,4 +1,4 @@
-package com.newnius.mobileJLU;
+package com.newnius.mobileJLU.oa;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.newnius.mobileJLU.R;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -117,7 +119,7 @@ public class OaDetailActivity extends AppCompatActivity {
         Matcher m = p.matcher(resource);
         if (m.find()) {
             title = m.group(1);
-
+            title = title.replaceAll("<br>","");
         }else{
             return ;
         }
@@ -135,14 +137,14 @@ public class OaDetailActivity extends AppCompatActivity {
 
 
         // 生成一个Pattern,同时编译一个正则表达式
-        Pattern p3 = Pattern.compile("<p>([^<]+)</p>");
+        Pattern p3 = Pattern.compile("(<p>[^<]+</p>)");
         //用Pattern的split()方法把字符串按"/"分割
         Matcher m3 = p3.matcher(resource);
         content = "";
         while (m3.find()) {
-            content += m3.group(1) + "\n";
+            content += m3.group(1) + "";
         }
-        content = content.replaceAll("&nbsp;","");
+        //content = content.replaceAll("&nbsp;","");
 
 
         // 生成一个Pattern,同时编译一个正则表达式

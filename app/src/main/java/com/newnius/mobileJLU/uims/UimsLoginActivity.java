@@ -1,54 +1,34 @@
-package com.newnius.mobileJLU;
+package com.newnius.mobileJLU.uims;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import com.newnius.mobileJLU.R;
-
-import static android.Manifest.permission.READ_CONTACTS;
+import com.newnius.mobileJLU.uims.UimsGetStuInfoTask;
+import com.newnius.mobileJLU.uims.UimsSession;
+import com.newnius.mobileJLU.util.GeneralMethods;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity{
+public class UimsLoginActivity extends AppCompatActivity{
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -222,9 +202,9 @@ public class LoginActivity extends AppCompatActivity{
 
                 InputStream is = conn.getInputStream();
                 if (conn.getHeaderField("Location").contains("index.do")) {
-                    AccountManager.setClassNo(classNo);
-                    AccountManager.setUImsPassword(password);
-                    AccountManager.setUimsCookie(conn.getHeaderField("Set-Cookie"));
+                    UimsSession.setClassNo(Integer.parseInt(classNo));
+                    UimsSession.setPassword(password);
+                    UimsSession.setCookie(conn.getHeaderField("Set-Cookie"));
                     return true;
                 }
                 is.close();
@@ -243,6 +223,7 @@ public class LoginActivity extends AppCompatActivity{
             showProgress(false);
 
             if (success) {
+                new UimsGetStuInfoTask(UimsSession.getCookie()).execute();
                 finish();
             } else {
                 passwordView.setError(getString(R.string.error_incorrect_password));

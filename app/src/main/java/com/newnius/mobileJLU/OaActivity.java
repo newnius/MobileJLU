@@ -17,6 +17,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.newnius.mobileJLU.oa.OaAnnouncement;
+import com.newnius.mobileJLU.oa.OaDetailActivity;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;

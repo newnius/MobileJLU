@@ -6,7 +6,8 @@ import android.util.Log;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.newnius.mobileJLU.AccountManager;
+import com.newnius.mobileJLU.CurriculumActivity;
+import com.newnius.mobileJLU.uims.UimsSession;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -23,17 +24,19 @@ import java.util.List;
  * Represents an asynchronous login/registration task used to authenticate
  * the user.
  */
-public class CurriculumGetTask extends AsyncTask<Void, Void, Boolean>{
+public class CurriculumGetTask extends AsyncTask<Void, Void, List<CurriculumCourse>>{
         private final int termId;
+        private final CurriculumActivity curriculumActivity;
 
-    public CurriculumGetTask(int termId) {
-            this.termId = termId;
-        }
+    public CurriculumGetTask(CurriculumActivity curriculumActivity,int termId) {
+        this.curriculumActivity = curriculumActivity;
+        this.termId = termId;
+    }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            String cookie = AccountManager.getUimsCookie();
-            int userId = 232059;
+        protected List<CurriculumCourse> doInBackground(Void... params) {
+            String cookie = UimsSession.getCookie();
+            int userId = UimsSession.getUserId();
                     try {
                         URL url = new URL("http://uims.jlu.edu.cn/ntms/service/res.do");
                         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -72,29 +75,32 @@ public class CurriculumGetTask extends AsyncTask<Void, Void, Boolean>{
                             for (JsonNode course : value)
                             {
                                 JsonNode teachClassMaster = course.path("teachClassMaster");
+                                JsonNode lessonSchedules = teachClassMaster.path("lessonSchedules");
                                 List<CurriCulumnLesson> lessons = new ArrayList<>();
+                                for (JsonNode lessonSchedule : lessonSchedules){
+                                    String classroomName = lessonSchedule.at("/classroom/fullName").asText();
+                                    int classSet = lessonSchedule.at("/timeBlock/classSet").asInt();
+                                    int endWeek = lessonSchedule.at("/timeBlock/endWeek").asInt();
+                                    int beginWeek = lessonSchedule.at("/timeBlock/beginWeek").asInt();
+                                    int dayOfWeek = lessonSchedule.at("/timeBlock/dayOfWeek").asInt();
+                                    String weekOddEven = lessonSchedule.at("/timeBlock/weekOddEven").asText();
+                                    CurriCulumnLesson lesson = new CurriCulumnLesson(classroomName, classSet, endWeek,beginWeek,dayOfWeek,weekOddEven);
+                                    lessons.add(lesson);
+                                }
 
                                 int maxStudCnt = teachClassMaster.path("maxStudCnt").asInt();
-                                Log.i("max", maxStudCnt+"");
-
                                 String teacherName = teachClassMaster.path("lessonTeachers").get(0).at("/teacher/name").asText();
-                                Log.i("teacher", teacherName);
-
                                 int teacherId = teachClassMaster.path("lessonTeachers").get(0).at("/teacher/teacherId").asInt();;
-                                Log.i("id", teacherId+"");
-
                                 String courseName = teachClassMaster.at("/lessonSegment/fullName").asText();
-                                Log.i("name", courseName);
-
                                 CurriculumCourse curriculumCourse = new CurriculumCourse( maxStudCnt,  lessons, teacherName, teacherId, courseName);
                                 curriculumCourses.add(curriculumCourse);
                             }
                         }
 
-                        return false;
+                        return curriculumCourses;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return false;
+                        return null;
                     }
         }
 
@@ -105,7 +111,8 @@ public class CurriculumGetTask extends AsyncTask<Void, Void, Boolean>{
     */}
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(List<CurriculumCourse> courses) {
+            curriculumActivity.display(courses);
         /*    mAuthTask = null;
             showProgress(false);
 

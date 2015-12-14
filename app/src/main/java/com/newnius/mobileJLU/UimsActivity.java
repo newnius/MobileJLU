@@ -1,5 +1,6 @@
 package com.newnius.mobileJLU;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,7 @@ import com.google.gson.Gson;
 import com.newnius.mobileJLU.uims.UimsCourse;
 import com.newnius.mobileJLU.uims.UimsMsgCourse;
 import com.newnius.mobileJLU.uims.UimsMsgTerm;
-import com.newnius.mobileJLU.uims.UimsStuInfo;
+import com.newnius.mobileJLU.uims.UimsSession;
 import com.newnius.mobileJLU.uims.UimsTerm;
 
 import java.io.BufferedReader;
@@ -37,19 +38,18 @@ public class UimsActivity extends AppCompatActivity {
     private ListView listView;
     List<UimsCourse> uimsCourses;
     List<UimsTerm> uimsTerms;
-    private int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uims);
 
-        if(AccountManager.getUimsCookie()==null) {
+        if(UimsSession.getCookie()==null) {
             Toast.makeText(this,"尚未登录",Toast.LENGTH_SHORT).show();
             finish();
         }else{
-
-/*        if(AccountManager.getUimsCookie()==null) {
-            Intent intentLogin = new Intent(UimsActivity.this, LoginActivity.class);
+/*
+        if(UimsSession.getCookie()==null) {
+            Intent intentLogin = new Intent(UimsActivity.this, UimsLoginActivity.class);
             startActivity(intentLogin);
         }*/
 
@@ -112,13 +112,13 @@ public class UimsActivity extends AppCompatActivity {
 
                 adapter.setDropDownViewResource(R.layout.my_simple_spinner_item);
                 spinner.setAdapter(adapter);
-                spinner.setSelection(1,true);
+                spinner.setSelection(0,true);
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         HashMap<String, Object> data = (HashMap<String, Object>)parent.getItemAtPosition(position);
                         Log.i("spinner", data.get("termId").toString());
-                        getScoreByTerm(AccountManager.getUimsCookie(), Integer.parseInt(data.get("termId").toString()));
+                        getScoreByTerm(UimsSession.getCookie(), Integer.parseInt(data.get("termId").toString()));
                     }
 
                     @Override
@@ -132,9 +132,8 @@ public class UimsActivity extends AppCompatActivity {
         }
     };
 
-            getTerms(AccountManager.getUimsCookie());
-                getUserInfo(AccountManager.getUimsCookie());
-        getLatestScore(AccountManager.getUimsCookie());
+            getTerms(UimsSession.getCookie());
+            getLatestScore(UimsSession.getCookie());
 
             }catch(Exception e){
                 e.printStackTrace();
@@ -296,6 +295,7 @@ public class UimsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    int userId = UimsSession.getUserId();
                     URL url = new URL("http://uims.jlu.edu.cn/ntms/service/res.do");
                     HttpURLConnection conn = (HttpURLConnection)url.openConnection();
                     conn.setDoInput(true);
@@ -392,45 +392,5 @@ public class UimsActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void getUserInfo(final String cookie){
-        Log.i("uims", "getUserInfo");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do");
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-                    //conn.setDoInput(true);
-                    //conn.setDoOutput(true);
-                    //conn.setRequestMethod("GET");
-                    //conn.setUseCaches(false);
-                    //conn.setInstanceFollowRedirects(false);
-                    //conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("Cookie", cookie);
-                    conn.connect();
-
-                    InputStream is = conn.getInputStream();
-
-                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                    String response = "";
-                    String readLine = null;
-                    while((readLine =br.readLine()) != null){
-                        response = response + readLine;
-                    }
-                    is.close();
-                    br.close();
-                    conn.disconnect();
-                    Log.i("userinfo", response);
-                    UimsStuInfo uimsStuInfo = new Gson().fromJson(response, UimsStuInfo.class);
-                    userId = uimsStuInfo.getUserId();
-                    return ;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return;
-                }
-            }
-        }).start();
     }
 }

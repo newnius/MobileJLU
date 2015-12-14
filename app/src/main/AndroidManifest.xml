@@ -23,13 +23,13 @@
             android:label="@string/title_activity_oa" >
         </activity>
         <activity
-            android:name=".OaDetailActivity"
+            android:name=".oa.OaDetailActivity"
             android:label="@string/title_activity_oa_detail" >
         </activity>
         <activity android:name=".UimsActivity" >
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".uims.UimsLoginActivity"
             android:label="@string/title_activity_uims_login" >
         </activity>
         <activity android:name=".CurriculumActivity" >

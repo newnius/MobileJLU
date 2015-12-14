@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
-        applicationId "com.newnius.portableJLU"
+        applicationId "com.newnius.mobileJLU"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

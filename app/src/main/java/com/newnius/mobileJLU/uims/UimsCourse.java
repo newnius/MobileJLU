@@ -15,14 +15,12 @@ public class UimsCourse {
     private String notes;
     private String planDetail;
     private String score;
-    private int scoreNum;
+    private double scoreNum;
     private int selectType;
-    private UimsStudent student;
-    private UimsTeachingTerm teachingTerm;
     private int type5;
     private String xkkh;
 
-    public UimsCourse(int asId, int classHour, Course course, double credit, String dataScore, double gpoint, String isPass, String isReselect, String notes, String planDetail, String score, int scoreNum, int selectType, UimsStudent student, UimsTeachingTerm teachingTerm, int type5, String xkkh) {
+    public UimsCourse(int asId, int classHour, Course course, double credit, String dataScore, double gpoint, String isPass, String isReselect, String notes, String planDetail, String score, double scoreNum, int selectType,  int type5, String xkkh) {
         this.asId = asId;
         this.classHour = classHour;
         this.course = course;
@@ -36,8 +34,6 @@ public class UimsCourse {
         this.score = score;
         this.scoreNum = scoreNum;
         this.selectType = selectType;
-        this.student = student;
-        this.teachingTerm = teachingTerm;
         this.type5 = type5;
         this.xkkh = xkkh;
     }

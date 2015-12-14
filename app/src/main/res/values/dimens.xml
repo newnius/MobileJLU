@@ -2,4 +2,17 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <dimen name="weekItemHeight">40dp</dimen>
+    <dimen name="weekItemMarTop">2dp</dimen>
+    <dimen name="weekItemMarLeft">2dp</dimen>
+
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="blue">#0000ff</color>
+    <color name="gray">#fcfcfc</color>
+
 </resources>
+
+

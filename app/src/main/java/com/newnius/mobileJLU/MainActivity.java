@@ -11,6 +11,8 @@ import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.newnius.mobileJLU.uims.UimsLoginActivity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.me).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentLogin = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intentLogin = new Intent(MainActivity.this, UimsLoginActivity.class);
                 startActivity(intentLogin);
             }
         });

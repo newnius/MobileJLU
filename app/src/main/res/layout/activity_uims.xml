@@ -22,13 +22,13 @@
                 android:layout_height="wrap_content">
             </Spinner>>
 
-            <com.newnius.mobileJLU.ListViewInScrollView
+            <com.newnius.mobileJLU.util.ListViewInScrollView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/listView"
                 >
 
-            </com.newnius.mobileJLU.ListViewInScrollView>
+            </com.newnius.mobileJLU.util.ListViewInScrollView>
 
         </LinearLayout>
 
