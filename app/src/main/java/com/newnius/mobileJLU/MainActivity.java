@@ -58,11 +58,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadModules(){
-        int[] moduleIcons = {R.drawable.icon_oa, R.drawable.icon_oa,R.drawable.icon_oa,
-                R.drawable.icon_oa,R.drawable.icon_oa,R.drawable.icon_oa,
-                R.drawable.icon_oa,R.drawable.icon_oa,R.drawable.icon_oa};
-        String[] moduleIds = {"OaActivity", "jwc", "book", "card", "job", "uims", "curriculumSchedule", "tel", "lost", "map"};
-        String[] moduleNames = {"校内通知", "教务通知", "图书服务", "校园卡", "就业信息", "成绩查询", "课程表", "吉大黄页", "失物招领", "校园地图"};
+        int[] moduleIcons = {R.drawable.icon_oa, R.drawable.icon_oa,R.drawable.icon_library,
+                R.drawable.icon_card,R.drawable.icon_job,R.drawable.icon_mark,
+                R.drawable.icon_curriculum,R.drawable.icon_link,R.drawable.icon_lost,
+                R.drawable.icon_oa};
+        String[] moduleIds = {"oa", "jwc", "library", "card", "job", "uims", "curriculumSchedule", "link", "lost", "map","news"};
+        String[] moduleNames = {"校内通知", "教务通知", "图书服务", "校园卡", "就业信息", "成绩查询", "课程表", "吉大黄页", "失物招领", "校园地图","吉大新闻"};
         GridView gridView = (GridView)findViewById(R.id.gridView);
         List<HashMap<String, Object>> modules = new ArrayList<>();
 
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                             HashMap<String, Object> data = (HashMap<String, Object>) gridView.getItemAtPosition(position);
 
                             switch(data.get("moduleId").toString()){
-                                case "OaActivity":
+                                case "oa":
                                     Intent intentOa = new Intent(MainActivity.this, OaActivity.class);
                                     startActivity(intentOa);
                                     break;
