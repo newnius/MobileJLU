@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loadModules();
+        Config.init();
 
         findViewById(R.id.me).setOnClickListener(new View.OnClickListener() {
             @Override

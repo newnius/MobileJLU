@@ -64,6 +64,7 @@ public class CurriculumActivity extends AppCompatActivity {
                     relativeLayoutMonday.addView(tv);
                 }
             }
+            Toast.makeText(this, "当前周课程表加载完毕",Toast.LENGTH_SHORT).show();
         }catch(Exception e){
             e.printStackTrace();
         }
