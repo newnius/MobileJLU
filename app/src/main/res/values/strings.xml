@@ -15,4 +15,8 @@
     <string name="error_invalid_password">password is invalid</string>
     <string name="error_incorrect_password">密码不正确</string>
     <string name="error_field_required">该项必填</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
