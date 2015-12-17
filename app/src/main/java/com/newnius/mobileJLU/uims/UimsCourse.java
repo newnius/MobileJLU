@@ -4,53 +4,43 @@ package com.newnius.mobileJLU.uims;
  * Created by newnius on 15-12-10.
  */
 public class UimsCourse {
-    private int asId;
-    private int classHour;
-    private Course course;
-    private double credit;
-    private String dataScore;
-    private double gpoint;
+    private int courseId;
+    private String courName;
+    private String englishName;
+    private String score;//score displayed
+    private double scoreNum;//score
+    private double credit;// course weight
+    private double gpoint;//gp
     private String isPass;
+    private int classHour;
     private String isReselect;
-    private String notes;
-    private String planDetail;
-    private String score;
-    private double scoreNum;
-    private int selectType;
-    private int type5;
-    private String xkkh;
 
-    public UimsCourse(int asId, int classHour, Course course, double credit, String dataScore, double gpoint, String isPass, String isReselect, String notes, String planDetail, String score, double scoreNum, int selectType,  int type5, String xkkh) {
-        this.asId = asId;
-        this.classHour = classHour;
-        this.course = course;
-        this.credit = credit;
-        this.dataScore = dataScore;
-        this.gpoint = gpoint;
-        this.isPass = isPass;
-        this.isReselect = isReselect;
-        this.notes = notes;
-        this.planDetail = planDetail;
+    public UimsCourse(int courseId, String courName, String englishName, String score, double scoreNum, double credit, double gpoint, String isPass, int classHour, String isReselect) {
+        this.courseId = courseId;
+        this.courName = courName;
+        this.englishName = englishName;
         this.score = score;
         this.scoreNum = scoreNum;
-        this.selectType = selectType;
-        this.type5 = type5;
-        this.xkkh = xkkh;
+        this.credit = credit;
+        this.gpoint = gpoint;
+        this.isPass = isPass;
+        this.classHour = classHour;
+        this.isReselect = isReselect;
+    }
+
+    public String getCourName() {
+        return courName;
     }
 
     public String getScore() {
         return score;
     }
 
-    public void setScore(String score) {
-        this.score = score;
+    public double getGpoint() {
+        return gpoint;
     }
 
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
+    public String getIsPass() {
+        return isPass;
     }
 }

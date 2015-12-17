@@ -10,16 +10,19 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.newnius.mobileJLU.Config;
 import com.newnius.mobileJLU.R;
 import com.newnius.mobileJLU.uims.UimsGetStuInfoTask;
 import com.newnius.mobileJLU.uims.UimsSession;
@@ -91,7 +94,7 @@ public class UimsLoginActivity extends AppCompatActivity{
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             passwordView.setError(getString(R.string.error_invalid_password));
             focusView = passwordView;
             cancel = true;
@@ -126,8 +129,7 @@ public class UimsLoginActivity extends AppCompatActivity{
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return true;
+        return password.length()>0;
     }
 
     /**
@@ -185,7 +187,14 @@ public class UimsLoginActivity extends AppCompatActivity{
         protected Boolean doInBackground(Void... params) {
             try {
                 final String data = "j_username=" + classNo + "&j_password=" + password;
-                URL url = new URL("http://uims.jlu.edu.cn/ntms/j_spring_security_check");
+                URL url = new URL("http://cjcx.jlu.edu.cn/score/action/security_check.php");
+                if(!Config.getInCampus() && !Config.getCanAccessInternet()){
+                    Toast.makeText(UimsLoginActivity.this, "网络不通", Toast.LENGTH_SHORT).show();
+                    return false;
+                }else if(Config.getInCampus()){
+                    url = new URL("http://uims.jlu.edu.cn/ntms/j_spring_security_check");
+                }
+
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
@@ -201,7 +210,7 @@ public class UimsLoginActivity extends AppCompatActivity{
                 out.close();
 
                 InputStream is = conn.getInputStream();
-                if (conn.getHeaderField("Location").contains("index.do")) {
+                if (conn.getHeaderField("Location").contains("index")) {
                     UimsSession.setClassNo(Integer.parseInt(classNo));
                     UimsSession.setPassword(password);
                     UimsSession.setCookie(conn.getHeaderField("Set-Cookie"));

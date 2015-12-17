@@ -91,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
                             GridView gridView = (GridView) parent;
                             HashMap<String, Object> data = (HashMap<String, Object>) gridView.getItemAtPosition(position);
 
+                            if(Config.getCanAccessInternet()==null || Config.getInCampus()==null){
+                                Toast.makeText(MainActivity.this, "环境初始化中，请3s后重试",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
                             switch(data.get("moduleId").toString()){
                                 case "oa":
                                     Intent intentOa = new Intent(MainActivity.this, OaActivity.class);
@@ -105,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                                     Intent intentUIms = new Intent(MainActivity.this, UimsActivity.class);
                                     startActivity(intentUIms);
                                     break;
+
                                 default:
                                     Toast.makeText(MainActivity.this,"开发中",Toast.LENGTH_SHORT).show();
 

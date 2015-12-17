@@ -23,6 +23,11 @@ public class UimsTerm {
         this.termName = termName;
     }
 
+    public UimsTerm(int termId, String termName) {
+        this.termId = termId;
+        this.termName = termName;
+    }
+
     /*
 
     {

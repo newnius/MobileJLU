@@ -12,10 +12,8 @@ import android.widget.Toast;
 import com.newnius.mobileJLU.curriculum.CurriCulumnLesson;
 import com.newnius.mobileJLU.curriculum.CurriculumCourse;
 import com.newnius.mobileJLU.curriculum.CurriculumGetTask;
-import com.newnius.mobileJLU.uims.Course;
 import com.newnius.mobileJLU.uims.UimsSession;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CurriculumActivity extends AppCompatActivity {

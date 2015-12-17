@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.newnius.mobileJLU.Config;
 import com.newnius.mobileJLU.GetCurrentWeekTask;
 
 import java.io.BufferedReader;
@@ -26,7 +27,10 @@ public class UimsGetStuInfoTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            URL url = new URL("http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do");
+            URL url = new URL("http://cjcx.jlu.edu.cn/score/action/getCurrentUserInfo.php");
+            if(Config.getInCampus()){
+                url = new URL("http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do");
+            }
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestProperty("Cookie", cookie);
             conn.connect();
@@ -41,7 +45,8 @@ public class UimsGetStuInfoTask extends AsyncTask<Void, Void, Boolean> {
             br.close();
             conn.disconnect();
 
-            Log.i("uimsGetStuInfoTask", response);
+            Log.i("getStuInfo and getTerms", response);
+
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode root = objectMapper.readTree(response);
             UimsSession.setUserId(root.path("userId").asInt());
@@ -55,24 +60,8 @@ public class UimsGetStuInfoTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected void onCancelled() {
-    /*    mAuthTask = null;
-        showProgress(false);
-    */}
-
-    @Override
     protected void onPostExecute(Boolean success) {
         if(success){
             new GetCurrentWeekTask().execute();
-        }
-        /*    mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                passwordView.setError(getString(R.string.error_incorrect_password));
-                passwordView.requestFocus();
-            }
-        */}
+        }}
 }

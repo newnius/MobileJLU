@@ -46,6 +46,11 @@ public class OaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oa);
+        if(!Config.getInCampus()){
+            Toast.makeText(OaActivity.this, "暂时没有校外版", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         listView = (ListView)findViewById(R.id.listView);
 
