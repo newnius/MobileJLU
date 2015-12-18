@@ -92,17 +92,11 @@ public class Main2Activity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
+        if (id == R.id.nav_account) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
@@ -112,15 +106,26 @@ public class Main2Activity extends AppCompatActivity
     }
 
     public void displayWeather(Weather w){
+        TextView weatherCurrent = (TextView)findViewById(R.id.weather_curr);
+        TextView weatherRange = (TextView)findViewById(R.id.weather_range);
         TextView weatherCity = (TextView)findViewById(R.id.weather_city);
         TextView weather = (TextView)findViewById(R.id.weather);
         ImageView weatherImage = (ImageView)findViewById(R.id.weather_image);
+
+
+        weatherCurrent.setText(w.getTemperatureCurrent());
+        String range = w.getTemperatureLowest()+"℃~"+w.getTemperatureHighest()+"℃";
+        weatherRange.setText(range);
         weatherCity.setText(w.getCity());
         weather.setText(w.getWeather());
+        String iconNo = w.getWeatherIcon().replace("http://api.k780.com:88/upload/weather/d/","");
+        iconNo = iconNo.replace(".gif","");
+        int no = Integer.parseInt(iconNo);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            weatherImage.setImageDrawable(getDrawable(R.drawable.side_nav_bar));
+            weatherImage.setImageDrawable(getDrawable(R.drawable.weather_0 + no));
         } else {
-            weatherImage.setImageDrawable(getResources().getDrawable(R.drawable.side_nav_bar));
+            weatherImage.setImageDrawable(getResources().getDrawable(R.drawable.weather_0 + no));
         }
     }
 

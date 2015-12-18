@@ -2,7 +2,6 @@ package com.newnius.mobileJLU;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,9 +49,9 @@ public class GetWeatherTask extends AsyncTask<Void, Void, Weather>{
                 String day = result.path("days").asText();
                 String weekday = result.path("weekday").asText();
                 String city = result.path("citynm").asText();
-                double temperatureCurrent = result.path("temperature_curr").asDouble();
-                double temperatureHighest = result.path("temp_high").asDouble();
-                double temperatureLowest = result.path("temp_high").asDouble();
+                String temperatureCurrent = result.path("temperature_curr").asText();
+                String temperatureHighest = result.path("temp_high").asText();
+                String temperatureLowest = result.path("temp_low").asText();
                 String wind = result.path("wind").asText();
                 String windPower = result.path("windp").asText();
                 String weather = result.path("weather").asText();

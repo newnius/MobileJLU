@@ -7,15 +7,15 @@ public class Weather{
     private String day;
     private String weekday;
     private String city;
-    private double temperatureCurrent;
-    private double temperatureHighest;
-    private double temperatureLowest;
+    private String temperatureCurrent;
+    private String temperatureHighest;
+    private String temperatureLowest;
     private String wind;
     private String windPower;
     private String weather;
     private String weatherIcon;
 
-    public Weather(String day, String weekday, String city, double temperatureCurrent, double temperatureHighest, double temperatureLowest, String wind, String windPower, String weather, String weatherIcon) {
+    public Weather(String day, String weekday, String city, String temperatureCurrent, String temperatureHighest, String temperatureLowest, String wind, String windPower, String weather, String weatherIcon) {
         this.day = day;
         this.weekday = weekday;
         this.city = city;
@@ -40,15 +40,15 @@ public class Weather{
         return city;
     }
 
-    public double getTemperatureCurrent() {
+    public String getTemperatureCurrent() {
         return temperatureCurrent;
     }
 
-    public double getTemperatureHighest() {
+    public String getTemperatureHighest() {
         return temperatureHighest;
     }
 
-    public double getTemperatureLowest() {
+    public String getTemperatureLowest() {
         return temperatureLowest;
     }
 
@@ -59,4 +59,6 @@ public class Weather{
     public String getWeatherIcon() {
         return weatherIcon;
     }
+
+
 }
