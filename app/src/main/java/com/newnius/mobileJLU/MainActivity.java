@@ -114,6 +114,11 @@ Intent intent =new Intent(MainActivity.this,Main2Activity.class);
                                     startActivity(intentUIms);
                                     break;
 
+                                case "jwc":
+                                    Intent intentJwc = new Intent(MainActivity.this, JwcActivity.class);
+                                    startActivity(intentJwc);
+                                    break;
+
                                 default:
                                     Toast.makeText(MainActivity.this,"开发中",Toast.LENGTH_SHORT).show();
 

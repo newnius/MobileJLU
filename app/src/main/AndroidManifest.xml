@@ -39,6 +39,10 @@
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity android:name=".JwcActivity" >
+        </activity>
+        <activity android:name=".jwc.JwcDetailActivity" >
+        </activity>
     </application>
 
 </manifest>

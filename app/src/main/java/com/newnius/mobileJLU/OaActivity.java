@@ -149,10 +149,6 @@ public class OaActivity extends AppCompatActivity {
         ).start();
     }
 
-    public void myClick(View view){
-        finish();
-    }
-
     public Bitmap getPic(String path){
         Bitmap bm = null;
         try {
