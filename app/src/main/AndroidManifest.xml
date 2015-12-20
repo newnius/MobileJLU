@@ -43,6 +43,8 @@
         </activity>
         <activity android:name=".jwc.JwcDetailActivity" >
         </activity>
+        <activity android:name=".FeedbackActivity" >
+        </activity>
     </application>
 
 </manifest>

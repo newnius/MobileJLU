@@ -59,21 +59,24 @@ public class Config {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    String ip = "oa.jlu.edu.cn";
-                    Process p = Runtime.getRuntime().exec("ping -c 1 -w 5 " + ip);// ping for 3 times
-                    int status = p.waitFor();
-                    if (status == 0) {
-                        Log.i("ping", "can visit oa");
-                        inCampus = true;
-                    } else {
+                while(true) {
+                    try {
+                        String ip = "oa.jlu.edu.cn";
+                        Process p = Runtime.getRuntime().exec("ping -c 3 -w 8 " + ip);// ping for 3 times
+                        int status = p.waitFor();
+                        if (status == 0) {
+                            Log.i("ping", "can visit oa");
+                            inCampus = true;
+                        } else {
+                            inCampus = false;
+                            Log.i("ping", "can not visit oa");
+                        }
+                        Thread.sleep(20000);
+                    } catch (Exception e) {
                         inCampus = false;
-                        Log.i("ping", "can not visit oa");
+                        Log.i("ping", "error");
+                        return;
                     }
-                } catch (Exception e) {
-                    inCampus = false;
-                    Log.i("ping", "error");
-                    return;
                 }
             }
         }).start();
@@ -83,22 +86,26 @@ public class Config {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    String ip = "www.upyun.com";
-                    Process p = Runtime.getRuntime().exec("ping -c 1 -w 5 " + ip);// ping for 3 times, wait 6s at last
-                    // ping的状态
-                    int status = p.waitFor();
-                    if (status == 0) {
-                        Log.i("ping", "can visit upyun");
-                        canAccessInternet = true;
-                    } else {
+
+                while (true) {
+                    try {
+                        String ip = "www.upyun.com";
+                        Process p = Runtime.getRuntime().exec("ping -c 3 -w 10 " + ip);// ping for 3 times, wait 6s at last
+                        // ping的状态
+                        int status = p.waitFor();
+                        if (status == 0) {
+                            Log.i("ping", "can visit upyun");
+                            canAccessInternet = true;
+                        } else {
+                            canAccessInternet = false;
+                            Log.i("ping", "can not visit upyun");
+                        }
+                        Thread.sleep(10000);
+                    }catch(Exception e){
                         canAccessInternet = false;
-                        Log.i("ping", "can not visit upyun");
+                        Log.i("ping", "error");
+                        return;
                     }
-                } catch (Exception e) {
-                    canAccessInternet = false;
-                    Log.i("ping", "error");
-                    return;
                 }
             }
         }).start();

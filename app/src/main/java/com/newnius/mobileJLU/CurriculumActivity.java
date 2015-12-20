@@ -1,5 +1,6 @@
 package com.newnius.mobileJLU;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.newnius.mobileJLU.curriculum.CurriCulumnLesson;
 import com.newnius.mobileJLU.curriculum.CurriculumCourse;
 import com.newnius.mobileJLU.curriculum.CurriculumGetTask;
+import com.newnius.mobileJLU.uims.UimsLoginActivity;
 import com.newnius.mobileJLU.uims.UimsSession;
 
 import java.util.List;
@@ -23,8 +25,13 @@ public class CurriculumActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(UimsSession.getCookie()==null){
-            Toast.makeText(this, "尚未登录", Toast.LENGTH_SHORT).show();
+        if(!Config.getInCampus()){
+            Toast.makeText(this, "校外暂时无法使用", Toast.LENGTH_SHORT).show();
+            finish();
+        }else if(UimsSession.getCookie()==null){
+            //Toast.makeText(this, "尚未登录", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(CurriculumActivity.this, UimsLoginActivity.class);
+            startActivity(intent);
             finish();
         }else {
             setContentView(R.layout.activity_curriculum);

@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import com.newnius.mobileJLU.uims.UimsCourse;
 import com.newnius.mobileJLU.uims.UimsGetScoreTask;
+import com.newnius.mobileJLU.uims.UimsLoginActivity;
 import com.newnius.mobileJLU.uims.UimsSession;
 import com.newnius.mobileJLU.uims.UimsTerm;
 import java.util.ArrayList;
@@ -39,7 +40,9 @@ public class UimsActivity extends AppCompatActivity {
             }
 
             if (UimsSession.getCookie() == null) {
-                Toast.makeText(this, "尚未登录", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "尚未登录", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(UimsActivity.this, UimsLoginActivity.class);
+                startActivity(intent);
                 finish();
             } else {
                 listView = (ListView) findViewById(R.id.listView);

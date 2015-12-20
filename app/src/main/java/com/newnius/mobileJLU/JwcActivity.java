@@ -28,6 +28,7 @@ public class JwcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jwc);
         new GetJwcTask(this,currentPage).execute();
+        Toast.makeText(JwcActivity.this,"加载中",Toast.LENGTH_SHORT).show();
 
         listView = (ListView)findViewById(R.id.listView);
         Button next = (Button)findViewById(R.id.next);

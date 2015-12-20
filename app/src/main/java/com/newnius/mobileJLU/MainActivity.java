@@ -23,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+/*
 Intent intent =new Intent(MainActivity.this,Main2Activity.class);
         startActivity(intent);
+*/
 
         loadModules();
         Config.init();
@@ -55,6 +57,8 @@ Intent intent =new Intent(MainActivity.this,Main2Activity.class);
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -99,6 +103,11 @@ Intent intent =new Intent(MainActivity.this,Main2Activity.class);
                                 return;
                             }
 
+                            if(!Config.getCanAccessInternet() && !Config.getInCampus()){
+                                Toast.makeText(MainActivity.this, "网络不通，请检查",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
                             switch(data.get("moduleId").toString()){
                                 case "oa":
                                     Intent intentOa = new Intent(MainActivity.this, OaActivity.class);
@@ -120,7 +129,7 @@ Intent intent =new Intent(MainActivity.this,Main2Activity.class);
                                     break;
 
                                 default:
-                                    Toast.makeText(MainActivity.this,"开发中",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this,data.get("moduleName").toString()+"版块开发中",Toast.LENGTH_SHORT).show();
 
                                     break;
 

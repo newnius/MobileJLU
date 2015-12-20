@@ -45,8 +45,6 @@ public class JwcGetDetailTask extends AsyncTask<Void, Void, JwcAnnouncement> {
             conn.disconnect();
             //Log.i("jwc", response);
 
-            List<JwcAnnouncement> announcements = new ArrayList<JwcAnnouncement>();
-            // 生成一个Pattern,同时编译一个正则表达式
             Pattern p = Pattern.compile("<h4>([^<]+)</h4>");
             Matcher m = p.matcher(response);
             String title="";
@@ -54,9 +52,7 @@ public class JwcGetDetailTask extends AsyncTask<Void, Void, JwcAnnouncement> {
                 title = m.group(1);
             }
 
-            // 生成一个Pattern,同时编译一个正则表达式
             Pattern p1 = Pattern.compile("<p class=\"info\">([^ ]+) 发表于([-: 0-9]+)  &nbsp;点击：([0-9]+)</p>");
-            //用Pattern的split()方法把字符串按"/"分割
             Matcher m1 = p1.matcher(response);
             String department="";
             String date="";
@@ -73,12 +69,11 @@ public class JwcGetDetailTask extends AsyncTask<Void, Void, JwcAnnouncement> {
             if (m3.find()) {
                 content = m3.group(1);
             }
+            content = content.replaceAll("/files/","http://jwc.jlu.edu.cn/files/");
             //content = content.replaceAll("<[^>]+>","").replaceAll("&nbsp;","");
 
-
-            // 生成一个Pattern,同时编译一个正则表达式
+/*
             Pattern p4 = Pattern.compile("<a href=\"/files/([^\"]+)\">([^<]+)</a>");
-            //用Pattern的split()方法把字符串按"/"分割
             Matcher m4 = p4.matcher(response);
             String downStr = "";
             String name = "";
@@ -90,10 +85,10 @@ public class JwcGetDetailTask extends AsyncTask<Void, Void, JwcAnnouncement> {
                 attachments.add(downStr);
                 Log.i("jwcActivity", downStr + " => " + name);
                 attachmentNames.add(name);
-                //content += "<br/>附件 " + "<a href='" + downStr + "'>" + name + "</a><br/>";
-            }
+                content += "<br/>附件 " + "<a href='" + downStr + "'>" + name + "</a><br/>";
+            }*/
 
-            JwcAnnouncement announcement = new JwcAnnouncement(id, title, content, date, department, attachments, attachmentNames);
+            JwcAnnouncement announcement = new JwcAnnouncement(id, title, content, date, department, null, null);
             return announcement;
         } catch (Exception e) {
             e.printStackTrace();
@@ -103,15 +98,8 @@ public class JwcGetDetailTask extends AsyncTask<Void, Void, JwcAnnouncement> {
 
     @Override
     protected void onPostExecute(JwcAnnouncement announcement) {
-        try {
-            Log.i("title", announcement.getTitle());
-            Log.i("content", announcement.getContent());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         if(announcement!=null)
             jwcDetailActivity.display(announcement);
     }
-
 
 }
