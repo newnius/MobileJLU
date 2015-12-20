@@ -71,7 +71,7 @@ public class Config {
                             inCampus = false;
                             Log.i("ping", "can not visit oa");
                         }
-                        Thread.sleep(20000);
+                        Thread.sleep(30000);
                     } catch (Exception e) {
                         inCampus = false;
                         Log.i("ping", "error");

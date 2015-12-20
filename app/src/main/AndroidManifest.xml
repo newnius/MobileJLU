@@ -45,6 +45,8 @@
         </activity>
         <activity android:name=".FeedbackActivity" >
         </activity>
+        <activity android:name=".JobActivity" >
+        </activity>
     </application>
 
 </manifest>

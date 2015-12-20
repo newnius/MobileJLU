@@ -128,6 +128,11 @@ Intent intent =new Intent(MainActivity.this,Main2Activity.class);
                                     startActivity(intentJwc);
                                     break;
 
+                                case "job":
+                                    Intent intentJob = new Intent(MainActivity.this, JobActivity.class);
+                                    startActivity(intentJob);
+                                    break;
+
                                 default:
                                     Toast.makeText(MainActivity.this,data.get("moduleName").toString()+"版块开发中",Toast.LENGTH_SHORT).show();
 
