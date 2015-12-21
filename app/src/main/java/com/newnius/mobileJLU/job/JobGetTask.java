@@ -81,6 +81,7 @@ public class JobGetTask extends AsyncTask<Void, Void, List<Announcement>>{
 
     @Override
     protected void onPostExecute(List<Announcement> announcements) {
-        jobActivity.display(announcements);
+        if(announcements!=null)
+            jobActivity.display(announcements);
     }
 }
