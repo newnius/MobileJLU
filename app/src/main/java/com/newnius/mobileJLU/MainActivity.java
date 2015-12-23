@@ -1,8 +1,11 @@
 package com.newnius.mobileJLU;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,16 +66,39 @@ Intent intent =new Intent(MainActivity.this,Main2Activity.class);
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+          if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+              AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+              builder.setMessage("确认退出吗？");
+              builder.setTitle("提示");
+              builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
+                      dialog.dismiss();
+                      MainActivity.this.finish();
+                  }
+              });
+              builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
+                      dialog.dismiss();
+                  }
+              });
+              builder.create().show();
+          }
+          return false;
+    }
+
     private void loadModules(){
         int[] moduleIcons = {R.drawable.icon_oa, R.drawable.icon_oa,R.drawable.icon_library,
                 R.drawable.icon_card,R.drawable.icon_job,R.drawable.icon_mark,
                 R.drawable.icon_curriculum,R.drawable.icon_link,R.drawable.icon_lost,
                 R.drawable.icon_oa};
-        String[] moduleIds = {"oa", "jwc", "library", "card", "job", "uims", "curriculumSchedule", "link", "lost", "map","news"};
-        String[] moduleNames = {"校内通知", "教务通知", "图书服务", "校园卡", "就业信息", "成绩查询", "课程表", "吉大黄页", "失物招领", "校园地图","吉大新闻"};
+        String[] moduleIds = {"oa", "jwc", "library", "regCourse", "job", "uims", "curriculumSchedule", "link", "lost", "map","news"};
+        String[] moduleNames = {"校内通知", "教务通知", "选课", "校园卡", "就业信息", "成绩查询", "课程表", "吉大黄页", "失物招领", "校园地图","吉大新闻"};
         GridView gridView = (GridView)findViewById(R.id.gridView);
         List<HashMap<String, Object>> modules = new ArrayList<>();
-
 
 
             for (int i=0;i<9;i++) {
@@ -114,6 +140,12 @@ Intent intent =new Intent(MainActivity.this,Main2Activity.class);
                                 case "curriculumSchedule":
                                     Intent intentCurriculum = new Intent(MainActivity.this, CurriculumActivity.class);
                                     startActivity(intentCurriculum);
+                                    break;
+
+
+                                case "regCourse":
+                                    Intent intentRegCourse = new Intent(MainActivity.this, CurriculumActivity.class);
+                                    startActivity(intentRegCourse);
                                     break;
 
                                 case "uims":

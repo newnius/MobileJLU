@@ -16,6 +16,7 @@ import java.net.URL;
 /**
  * Created by newnius on 15-12-14.
  * note: termId is also got here
+ * to fix: sometimes this would get 301 response(not logged), but another app works fine. don't know why
  */
 public class UimsGetStuInfoTask extends AsyncTask<Void, Void, Boolean> {
     private final String cookie;
@@ -31,8 +32,10 @@ public class UimsGetStuInfoTask extends AsyncTask<Void, Void, Boolean> {
             if(Config.getInCampus()){
                 url = new URL("http://uims.jlu.edu.cn/ntms/action/getCurrentUserInfo.do");
             }
+
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestProperty("Cookie", cookie);
+
             conn.connect();
             InputStream is = conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

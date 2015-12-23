@@ -4,18 +4,20 @@ package com.newnius.mobileJLU.uims;
  * Created by newnius on 15-12-10.
  */
 public class UimsCourse {
+    private int asId;
     private int courseId;
     private String courName;
     private String englishName;
     private String score;//score displayed
     private double scoreNum;//score
-    private double credit;// course weight
+    private double credit;//course weight
     private double gpoint;//gp
     private String isPass;
     private int classHour;
     private String isReselect;
 
-    public UimsCourse(int courseId, String courName, String englishName, String score, double scoreNum, double credit, double gpoint, String isPass, int classHour, String isReselect) {
+    public UimsCourse(int asId, int courseId, String courName, String englishName, String score, double scoreNum, double credit, double gpoint, String isPass, int classHour, String isReselect) {
+        this.asId = asId;
         this.courseId = courseId;
         this.courName = courName;
         this.englishName = englishName;
@@ -27,6 +29,7 @@ public class UimsCourse {
         this.classHour = classHour;
         this.isReselect = isReselect;
     }
+
 
     public String getCourName() {
         return courName;
@@ -42,5 +45,13 @@ public class UimsCourse {
 
     public String getIsPass() {
         return isPass;
+    }
+
+    public double getCredit() {
+        return credit;
+    }
+
+    public int getAsId() {
+        return asId;
     }
 }

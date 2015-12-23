@@ -21,5 +21,15 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="feedback">如果你有什么好的想法或者是反馈，欢迎反馈。抱歉，当前无法直接提交反馈。邮箱： mobilejlu@newnius.com</string>
+
+
+    <!-- Strings related to Uims -->
+    <string name="course_name">名称</string>
+    <string name="course_gpoint">绩点</string>
+    <string name="course_score">成绩</string>
+    <string name="course_credit">学分</string>
+
+
+
+    <string name="feedback">如果你有什么好的想法或者是反馈，欢迎反馈。邮箱： mobilejlu@newnius.com</string>
 </resources>

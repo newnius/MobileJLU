@@ -89,6 +89,7 @@ public class UimsGetScoreTask extends AsyncTask<Void, Void, List<UimsCourse>>{
             if(Config.getInCampus()){
                 courses = root.path("value");
                 for(JsonNode course:courses){
+                    int asId = course.path("asId").asInt();
                     int courseId = course.at("/course/courseId").asInt();
                     String courName = course.at("/course/courName").asText();
                     String englishName = course.at("/course/englishName").asText();
@@ -99,7 +100,7 @@ public class UimsGetScoreTask extends AsyncTask<Void, Void, List<UimsCourse>>{
                     String isPass = course.path("isPass").asText();
                     String isReselect = course.path("isReselect").asText();
                     int classHour = course.path("classHour").asInt();
-                    UimsCourse uimsCourse = new UimsCourse(courseId, courName, englishName, score, scoreNum, credit, gpoint, isPass, classHour, isReselect);
+                    UimsCourse uimsCourse = new UimsCourse(asId, courseId, courName, englishName, score, scoreNum, credit, gpoint, isPass, classHour, isReselect);
                     uimsCourses.add(uimsCourse);
                 }
             }else{
@@ -115,7 +116,7 @@ public class UimsGetScoreTask extends AsyncTask<Void, Void, List<UimsCourse>>{
                     String isPass = "";
                     String isReselect = course.path("isReselect").asText();
                     int classHour = course.path("classHour").asInt();
-                    UimsCourse uimsCourse = new UimsCourse(courseId, courName, englishName, score, scoreNum, credit, gpoint, isPass, classHour, isReselect);
+                    UimsCourse uimsCourse = new UimsCourse(0, courseId, courName, englishName, score, scoreNum, credit, gpoint, isPass, classHour, isReselect);
                     uimsCourses.add(uimsCourse);
                 }
                 Collections.reverse(uimsCourses);

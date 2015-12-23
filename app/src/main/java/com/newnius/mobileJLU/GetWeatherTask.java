@@ -69,7 +69,8 @@ public class GetWeatherTask extends AsyncTask<Void, Void, Weather>{
 
     @Override
     protected void onPostExecute(Weather w) {
-        main2Activity.displayWeather(w);
+        if(w!=null)
+            main2Activity.displayWeather(w);
     }
 
     private String getMyIp(){

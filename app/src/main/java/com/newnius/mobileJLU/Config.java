@@ -65,11 +65,11 @@ public class Config {
                         Process p = Runtime.getRuntime().exec("ping -c 3 -w 8 " + ip);// ping for 3 times
                         int status = p.waitFor();
                         if (status == 0) {
-                            Log.i("ping", "can visit oa");
+                            //Log.i("ping", "can visit oa");
                             inCampus = true;
                         } else {
                             inCampus = false;
-                            Log.i("ping", "can not visit oa");
+                            //Log.i("ping", "can not visit oa");
                         }
                         Thread.sleep(30000);
                     } catch (Exception e) {
@@ -94,11 +94,11 @@ public class Config {
                         // ping的状态
                         int status = p.waitFor();
                         if (status == 0) {
-                            Log.i("ping", "can visit upyun");
+                        //    Log.i("ping", "can visit upyun");
                             canAccessInternet = true;
                         } else {
                             canAccessInternet = false;
-                            Log.i("ping", "can not visit upyun");
+                          //  Log.i("ping", "can not visit upyun");
                         }
                         Thread.sleep(10000);
                     }catch(Exception e){
