@@ -13,9 +13,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
 import com.newnius.mobileJLU.uims.UimsLoginActivity;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +24,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-Intent intent =new Intent(MainActivity.this,Main2Activity.class);
+/*
+Intent intent =new Intent(MainActivity.this,CourseListActivity.class);
         startActivity(intent);
+*/
 
         loadModules();
         Config.init();
@@ -44,25 +44,18 @@ Intent intent =new Intent(MainActivity.this,Main2Activity.class);
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item_oa clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
             startActivity(intent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -95,7 +88,7 @@ Intent intent =new Intent(MainActivity.this,Main2Activity.class);
                 R.drawable.icon_card,R.drawable.icon_job,R.drawable.icon_mark,
                 R.drawable.icon_curriculum,R.drawable.icon_link,R.drawable.icon_lost,
                 R.drawable.icon_oa};
-        String[] moduleIds = {"oa", "jwc", "library", "regCourse", "job", "uims", "curriculumSchedule", "link", "lost", "map","news"};
+        String[] moduleIds = {"oa", "jwc", "regCourse", "card", "job", "uims", "curriculumSchedule", "link", "lost", "map","news"};
         String[] moduleNames = {"校内通知", "教务通知", "选课", "校园卡", "就业信息", "成绩查询", "课程表", "吉大黄页", "失物招领", "校园地图","吉大新闻"};
         GridView gridView = (GridView)findViewById(R.id.gridView);
         List<HashMap<String, Object>> modules = new ArrayList<>();
@@ -142,9 +135,8 @@ Intent intent =new Intent(MainActivity.this,Main2Activity.class);
                                     startActivity(intentCurriculum);
                                     break;
 
-
                                 case "regCourse":
-                                    Intent intentRegCourse = new Intent(MainActivity.this, CurriculumActivity.class);
+                                    Intent intentRegCourse = new Intent(MainActivity.this, RegCourseActivity.class);
                                     startActivity(intentRegCourse);
                                     break;
 

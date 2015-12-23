@@ -6,7 +6,9 @@ import java.util.List;
  * Created by newnius on 15-12-13.
  */
 public class CurriculumCourse {
+    private int lsltId;
     private int maxStudCnt;
+    private int stuCnt;
     private List<CurriCulumnLesson> lessons;
     private String teacherName;
     private int teacherId;
@@ -58,5 +60,21 @@ public class CurriculumCourse {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public int getStuCnt() {
+        return stuCnt;
+    }
+
+    public void setStuCnt(int stuCnt) {
+        this.stuCnt = stuCnt;
+    }
+
+    public int getLsltId() {
+        return lsltId;
+    }
+
+    public void setLsltId(int lsltId) {
+        this.lsltId = lsltId;
     }
 }

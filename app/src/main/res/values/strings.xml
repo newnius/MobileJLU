@@ -28,6 +28,12 @@
     <string name="course_gpoint">绩点</string>
     <string name="course_score">成绩</string>
     <string name="course_credit">学分</string>
+    <string name="course_state">状态</string>
+    <string name="course_class_hour">学时</string>
+    <string name="course_type">类型</string>
+    <string name="course_teacher">教师</string>
+    <string name="course_available">剩余</string>
+    <string name="course_area">上课地点</string>
 
 
 

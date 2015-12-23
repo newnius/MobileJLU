@@ -47,6 +47,10 @@
         </activity>
         <activity android:name=".JobActivity" >
         </activity>
+        <activity android:name=".RegCourseActivity" >
+        </activity>
+        <activity android:name=".curriculum.RegCourseDetailActivity" >
+        </activity>
     </application>
 
 </manifest>
