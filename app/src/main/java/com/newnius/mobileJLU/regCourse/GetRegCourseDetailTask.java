@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.newnius.mobileJLU.RegCourseActivity;
 import com.newnius.mobileJLU.curriculum.CurriCulumnLesson;
 import com.newnius.mobileJLU.curriculum.CurriculumCourse;
 import com.newnius.mobileJLU.uims.UimsSession;
@@ -23,11 +22,11 @@ import java.util.List;
  * Created by newnius on 15-12-23.
  */
 public class GetRegCourseDetailTask extends AsyncTask<Void, Void, List<CurriculumCourse>>{
-    private RegCourseActivity regCourseActivity;
+    private RegCourseDetailActivity regCourseDetailActivity;
     private int lslId;
 
-    public GetRegCourseDetailTask(RegCourseActivity regCourseActivity, int lslId) {
-        this.regCourseActivity = regCourseActivity;
+    public GetRegCourseDetailTask(RegCourseDetailActivity regCourseDetailActivity, int lslId) {
+        this.regCourseDetailActivity = regCourseDetailActivity;
         this.lslId = lslId;
     }
 
@@ -89,11 +88,13 @@ public class GetRegCourseDetailTask extends AsyncTask<Void, Void, List<Curriculu
                     int studCnt = teachClassMaster.path("studCnt").asInt();
                     String teacherName = teachClassMaster.path("lessonTeachers").get(0).at("/teacher/name").asText();
                     int teacherId = teachClassMaster.path("lessonTeachers").get(0).at("/teacher/teacherId").asInt();;
-                    String courseName = teachClassMaster.at("/lessonSegment/fullName").asText();
+                    String courseName = course.at("/lessonSelectLog/lesson/courseInfo/courName").asText();
                     int lsltId = course.path("lsltId").asInt();
+                    boolean isSelected = course.path("selectTag").asText().equals("Y")?true:false;
                     CurriculumCourse curriculumCourse = new CurriculumCourse( maxStudCnt,  lessons, teacherName, teacherId, courseName);
                     curriculumCourse.setLsltId(lsltId);
                     curriculumCourse.setStuCnt(studCnt);
+                    curriculumCourse.setIsSelected(isSelected);
                     curriculumCourses.add(curriculumCourse);
                 }
             }
@@ -108,8 +109,8 @@ public class GetRegCourseDetailTask extends AsyncTask<Void, Void, List<Curriculu
 
     @Override
     protected void onPostExecute(List<CurriculumCourse> curriculumCourses) {
-        if(curriculumCourses==null)
-            regCourseActivity.display(null);
+        if(curriculumCourses!=null)
+            regCourseDetailActivity.display(curriculumCourses);
     }
 
 

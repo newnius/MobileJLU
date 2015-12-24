@@ -1,6 +1,8 @@
 package com.newnius.mobileJLU;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.newnius.mobileJLU.regCourse.GetRegCourseTask;
 import com.newnius.mobileJLU.regCourse.RegCourse;
+import com.newnius.mobileJLU.regCourse.RegCourseDetailActivity;
 import com.newnius.mobileJLU.util.ListViewInScrollView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +39,7 @@ public class RegCourseActivity extends AppCompatActivity {
         List<HashMap<String, Object>> data = new ArrayList<>();
         for (RegCourse course : regCourses) {
             HashMap<String, Object> item= new HashMap<>();
-            item.put("lslId", course.getLessonId());
+            item.put("lslId", course.getLslId());
             item.put("state", course.isSelected()?"已选":"可选");
             item.put("courseName", course.getCourseName());
             item.put("credit", course.getCredit());
@@ -55,6 +58,7 @@ public class RegCourseActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long itemId) {
                         ListView listView = (ListView) parent;
                         HashMap<String, Object> data = (HashMap<String, Object>) listView.getItemAtPosition(position);
+                        final int lslId = Integer.parseInt(data.get("lslId").toString());
                         String state = data.get("state").toString();
                         String name = data.get("courseName").toString();
                         String credit = data.get("credit").toString();
@@ -65,9 +69,17 @@ public class RegCourseActivity extends AppCompatActivity {
                         View layout = inflater.inflate(R.layout.dialog_reg_course_detail,
                                 (ViewGroup) findViewById(R.id.reg_course_detail));
                         AlertDialog dialog = new AlertDialog.Builder(RegCourseActivity.this).setTitle("课程信息").setView(layout)
-                                .setPositiveButton("选课", null)
-                                .setNegativeButton("取消", null)
-                                .setNeutralButton("抢课", null).show();
+                                .setPositiveButton("选课", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(RegCourseActivity.this, RegCourseDetailActivity.class);
+
+                                        intent.putExtra("lslId", lslId);
+                                        startActivity(intent);
+                                        Log.i("lslId", lslId+"");
+                                    }
+                                })
+                                .setNegativeButton("取消", null).show();
                         TextView stateView = (TextView) dialog.findViewById(R.id.course_state);
                         stateView.setText(state);
                         TextView nameView = (TextView) dialog.findViewById(R.id.course_name);

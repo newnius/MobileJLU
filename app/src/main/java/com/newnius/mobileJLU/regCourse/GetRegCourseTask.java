@@ -80,7 +80,8 @@ public class GetRegCourseTask extends AsyncTask<Void, Void, List<RegCourse>>{
                 String schoolName = course.at("/lesson/teachSchool/schoolName").asText();
                 boolean isSelected = course.path("selectResult").asText().equals("Y")?true:false;
                 Double credit = course.at("/applyPlanLesson/credit").asDouble();
-                RegCourse regCourse = new RegCourse(lessonId, totalClassHour, courseName, courseId, schoolName, isSelected, credit);
+                int lslId = course.path("lslId").asInt();
+                RegCourse regCourse = new RegCourse(lslId, lessonId, totalClassHour, courseName, courseId, schoolName, isSelected, credit);
                 regCourses.add(regCourse);
             }
             return regCourses;

@@ -13,6 +13,7 @@ public class CurriculumCourse {
     private String teacherName;
     private int teacherId;
     private String courseName;
+    private boolean isSelected;
 
     public CurriculumCourse(int maxStudCnt, List<CurriCulumnLesson> lessons, String teacherName, int teacherId, String courseName) {
         this.maxStudCnt = maxStudCnt;
@@ -76,5 +77,13 @@ public class CurriculumCourse {
 
     public void setLsltId(int lsltId) {
         this.lsltId = lsltId;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
     }
 }

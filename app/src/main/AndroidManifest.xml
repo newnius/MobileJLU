@@ -49,7 +49,7 @@
         </activity>
         <activity android:name=".RegCourseActivity" >
         </activity>
-        <activity android:name=".curriculum.RegCourseDetailActivity" >
+        <activity android:name=".regCourse.RegCourseDetailActivity" >
         </activity>
     </application>
 

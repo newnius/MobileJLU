@@ -4,6 +4,7 @@ package com.newnius.mobileJLU.regCourse;
  * Created by newnius on 15-12-23.
  */
 public class RegCourse {
+    private int lslId;
     private int lessonId;
     private int totalClassHour;
     private String courseName;
@@ -12,7 +13,8 @@ public class RegCourse {
     private boolean isSelected;
     private double credit;
 
-    public RegCourse(int lessonId, int totalClassHour, String courseName, int courseId, String schoolName, boolean isSelected, double credit) {
+    public RegCourse(int lslId, int lessonId, int totalClassHour, String courseName, int courseId, String schoolName, boolean isSelected, double credit) {
+        this.lslId = lslId;
         this.lessonId = lessonId;
         this.totalClassHour = totalClassHour;
         this.courseName = courseName;
@@ -48,6 +50,10 @@ public class RegCourse {
 
     public double getCredit() {
         return credit;
+    }
+
+    public int getLslId() {
+        return lslId;
     }
 
     /*    {
