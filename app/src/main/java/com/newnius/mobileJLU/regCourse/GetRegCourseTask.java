@@ -2,6 +2,7 @@ package com.newnius.mobileJLU.regCourse;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -95,5 +96,7 @@ public class GetRegCourseTask extends AsyncTask<Void, Void, List<RegCourse>>{
     protected void onPostExecute(List<RegCourse> regCourses) {
         if(regCourses!=null)
             regCourseActivity.display(regCourses);
+        else
+            Toast.makeText(regCourseActivity, "获取课程列表失败.", Toast.LENGTH_SHORT).show();
     }
 }

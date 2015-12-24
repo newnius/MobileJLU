@@ -32,7 +32,7 @@ public class JobActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job);
-
+        Toast.makeText(JobActivity.this, "加载中", Toast.LENGTH_SHORT).show();
         listView = (ListView)findViewById(R.id.list_view);
         Button next = (Button)findViewById(R.id.btn_next);
         next.setOnClickListener(new View.OnClickListener() {

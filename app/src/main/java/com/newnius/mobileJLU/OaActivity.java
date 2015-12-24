@@ -52,6 +52,8 @@ public class OaActivity extends AppCompatActivity {
             return;
         }
 
+        Toast.makeText(OaActivity.this, "加载中", Toast.LENGTH_SHORT).show();
+
         listView = (ListView)findViewById(R.id.listView);
 
 

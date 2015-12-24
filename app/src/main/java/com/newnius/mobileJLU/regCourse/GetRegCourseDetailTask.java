@@ -59,7 +59,7 @@ public class GetRegCourseDetailTask extends AsyncTask<Void, Void, List<Curriculu
             is.close();
             br.close();
             conn.disconnect();
-            Log.i("getRegCourseDetail", response);
+            //Log.i("getRegCourseDetail", response);
 
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode root = objectMapper.readTree(response);

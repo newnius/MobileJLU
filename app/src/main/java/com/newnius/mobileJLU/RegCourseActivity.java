@@ -13,10 +13,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.newnius.mobileJLU.regCourse.GetRegCourseTask;
 import com.newnius.mobileJLU.regCourse.RegCourse;
 import com.newnius.mobileJLU.regCourse.RegCourseDetailActivity;
+import com.newnius.mobileJLU.uims.UimsSession;
 import com.newnius.mobileJLU.util.ListViewInScrollView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +32,18 @@ public class RegCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reg_course);
+
+        if(!Config.getInCampus()){
+            Toast.makeText(RegCourseActivity.this, "没有校外版本", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        if(UimsSession.getCookie()==null){
+            Toast.makeText(RegCourseActivity.this, "尚未登录", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         listView = (ListViewInScrollView) findViewById(R.id.list_view);
         new GetRegCourseTask(this).execute();
