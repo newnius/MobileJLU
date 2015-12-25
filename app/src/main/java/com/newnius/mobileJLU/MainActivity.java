@@ -156,7 +156,7 @@ Intent intent =new Intent(MainActivity.this,CourseListActivity.class);
                                     break;
 
                                 default:
-                                    Toast.makeText(MainActivity.this,data.get("moduleName").toString()+"版块开发中",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this,data.get("moduleName").toString()+"版块校外不可用",Toast.LENGTH_SHORT).show();
 
                                     break;
 
