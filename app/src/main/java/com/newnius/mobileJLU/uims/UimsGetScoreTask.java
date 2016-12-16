@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * Created by newnius on 15-12-17.
+ *
  */
 public class UimsGetScoreTask extends AsyncTask<Void, Void, List<UimsCourse>>{
     private UimsActivity uimsActivity;

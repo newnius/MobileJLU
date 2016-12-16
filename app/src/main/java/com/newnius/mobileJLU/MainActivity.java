@@ -88,8 +88,8 @@ Intent intent =new Intent(MainActivity.this,CourseListActivity.class);
                 R.drawable.icon_card,R.drawable.icon_job,R.drawable.icon_mark,
                 R.drawable.icon_curriculum,R.drawable.icon_link,R.drawable.icon_lost,
                 R.drawable.icon_oa};
-        String[] moduleIds = {"oa", "jwc", "regCourse", "card", "job", "uims", "curriculumSchedule", "link", "lost", "map","news"};
-        String[] moduleNames = {"校内通知", "教务通知", "选课", "校园卡", "就业信息", "成绩查询", "课程表", "吉大黄页", "失物招领", "校园地图","吉大新闻"};
+        String[] moduleIds = {"oa", "jwc", "regCourse", "card", "job", "uims", "curriculumSchedule", "uims_eval", "lost", "map","news"};
+        String[] moduleNames = {"校内通知", "教务通知", "选课", "校园卡", "就业信息", "成绩查询", "课程表", "一键评教", "失物招领", "校园地图","吉大新闻"};
         GridView gridView = (GridView)findViewById(R.id.gridView);
         List<HashMap<String, Object>> modules = new ArrayList<>();
 
@@ -153,6 +153,11 @@ Intent intent =new Intent(MainActivity.this,CourseListActivity.class);
                                 case "job":
                                     Intent intentJob = new Intent(MainActivity.this, JobActivity.class);
                                     startActivity(intentJob);
+                                    break;
+
+                                case "uims_eval":
+                                    Intent intentEval = new Intent(MainActivity.this, UIMSEvalActivity.class);
+                                    startActivity(intentEval);
                                     break;
 
                                 default:

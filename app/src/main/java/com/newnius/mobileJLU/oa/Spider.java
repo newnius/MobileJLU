@@ -11,6 +11,7 @@ import java.net.URL;
 
 /**
  * Created by newnius on 15-9-12.
+ *
  */
 public class Spider extends Thread {
     private Handler handler;
